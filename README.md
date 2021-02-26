@@ -37,3 +37,6 @@ t = setInterval(function () {
 	a.click()) : i++
 }, e)
 ```
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTExNjU1NDQ4NzVdfQ==
+-->
