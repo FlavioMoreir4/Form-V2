@@ -1,0 +1,424 @@
+<style>
+    @import url("https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css");
+
+    .is-hidden {
+        display: none !important
+    }
+
+    .direct,
+    .process {
+        text-align: center
+    }
+
+    .load {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        margin: 0 auto
+    }
+
+    .load hr {
+        border: 0;
+        margin: 0;
+        width: 40%;
+        height: 40%;
+        position: absolute;
+        border-radius: 50%;
+        animation: spin 2s ease infinite
+    }
+
+    .load :first-child {
+        background: #3b995c;
+        animation-delay: -1.5s
+    }
+
+    .load :nth-child(2) {
+        background: #3b9982;
+        animation-delay: -1s
+    }
+
+    .load :nth-child(3) {
+        background: #3b995c;
+        animation-delay: -.5s
+    }
+
+    .load :last-child {
+        background: #3b9982
+    }
+
+    @keyframes spin {
+
+        0%,
+        100% {
+            transform: translate(0)
+        }
+
+        25% {
+            transform: translate(160%)
+        }
+
+        50% {
+            transform: translate(160%, 160%)
+        }
+
+        75% {
+            transform: translate(0, 160%)
+        }
+    }
+</style>
+
+<form class="needs-validation" id="form" name="form" novalidate>
+
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="candidato" name="candidato" placeholder="Nome Completo" required>
+        <label for="candidato">Nome Completo</label>
+        <div class="invalid-feedback">
+            Informe o nome completo do candidato(a).
+        </div>
+    </div>
+
+    <div class="form-floating mb-3">
+        <select class="form-select" id="idade" name="idade" placeholder="Idade" required>
+            <option selected disabled value=""></option>
+        </select>
+        <label for="idade">Idade</label>
+        <div class="invalid-feedback">
+            Selecione a idade do candidato(a).
+        </div>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="responsavel" name="responsavel" placeholder="Nome do responsável"
+            required>
+        <label for="responsavel">Nome do responsável</label>
+        <div class="invalid-feedback">
+            Informe o nome do responsável.
+        </div>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="tel" class="form-control" id="whatsapp" name="whatsapp" placeholder="99 99999-9999" required=""
+            minlength="13" maxlength="13" pattern="[0-9]{2} [0-9]{5}-[0-9]{4}">
+        <label for="whatsapp" class="form-label">WhatsApp</label>
+        <div class="invalid-feedback">
+            Informe um número valido sem "+55".
+        </div>
+    </div>
+
+    <!-- <div class="form-floating mb-3">
+        <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+        <div id="emailHelp" class="form-text">Nunca compartilharemos seu e-mail com mais ninguém.</div>
+        <label for="email">Email</label>
+        <div class="invalid-feedback">
+            Digite um email válido.
+        </div>
+    </div> -->
+
+    <div class="form-floating mb-3" id="regG">
+        <select class="form-select" id="regiao" name="regiao" placeholder="Unidade" required>
+            <option selected disabled value=""></option>
+        </select>
+        <label for="regiao">Região</label>
+        <div class="invalid-feedback">
+            Selecione uma unidade.
+        </div>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="bairro" name="bairro" list="listBairro" placeholder="Bairro"
+            required>
+        <label for="bairro">Bairro</label>
+        <div class="invalid-feedback">
+            Digite o nome do seu bairro.
+        </div>
+        <datalist id="listBairro" name="listBairro">
+        </datalist>
+    </div>
+
+    <div class="d-grid mb-3">
+        <input name="campanha" type="hidden" id="campanha" value="Orgânico" class="form-control">
+        <input name="nome_regiao" type="hidden" id="nome_regiao" class="form-control">
+        <input name="status" type="hidden" id="status" value="Novo" class="form-control">
+        <input name="origem" type="hidden" id="origem" value="MIRIM" class="form-control">
+        <input name="curso" type="hidden" id="curso" value="16" class="form-control">
+        <input name="grupo" type="hidden" id="grupo" value="IPMIL" class="form-control">
+        <input name="franquia" type="hidden" id="franquia" value="MIRIM" class="form-control">
+        <input type="submit" name="btnEnviar" value="Confirmar" class="btn btn-success btn-lg">
+        <!-- <div class="form-text">Ao clicar em Confirmar, você concorda com nossa <a
+                href="//recrutamentopremilitar.com.br/politica-de-privacidade" target="_blank"
+                class="text-decoration-none text-success">Política de Privacidade</a>
+        </div> -->
+    </div>
+</form>
+
+<div class="process is-hidden text-white">
+    <h2 class="text-white fusion-responsive-typography-calculated" data-fontsize="44" data-lineheight="46.2px"
+        style="--fontSize:44; line-height: 1.05;">Procurando Instrutor <span id="regiao_text">na região</span></h2>
+    <h3 class="text-white fusion-responsive-typography-calculated" data-fontsize="26" data-lineheight="29.9px"
+        style="--fontSize:26; line-height: 1.15;">Você será direcionado para WhatsApp, aguarde!</h3>
+    <div class="load">
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+    </div>
+</div>
+<div class="direct is-hidden text-white">
+    <h2 class="text-white fusion-responsive-typography-calculated" data-fontsize="44" data-lineheight="46.2px"
+        style="--fontSize:44; line-height: 1.05;">Você já realizou seu cadastro!</h2>
+    <h3 class="text-white fusion-responsive-typography-calculated" data-fontsize="26" data-lineheight="29.9px"
+        style="--fontSize:26; line-height: 1.15;">Você será direcionado para WhatsApp, aguarde!</h3>
+    <div class="load">
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+    </div>
+</div>
+
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+  integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+  crossorigin="anonymous"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script> -->
+<script src="//unpkg.com/vanilla-masker@1.1.1/build/vanilla-masker.min.js"> </script>
+<script src="https://cdn.jsdelivr.net/gh/validatorjs/validator.js@13.5.2/validator.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.all.min.js"></script>
+<script>
+    fbq('track', 'ViewContent');
+    class Fetch {
+        constructor(url, headers = {
+            "Content-type": "application/x-www-form-urlencoded"
+        }) {
+            this.url = url
+            this.headers = headers
+        }
+        Insert(data) {
+            return fetch(this.url, {
+                method: "POST",
+                body: data
+            }).then(res => res.json())
+        }
+        Consult(data, headers) {
+            return fetch(this.url, {
+                method: "POST",
+                body: new URLSearchParams(data).toString(),
+                headers: this.headers
+            }).then(res => res.json())
+        }
+    }
+
+    let getParams = function (e) {
+            for (var a = window.location.search.substring(1).split("&"), t = 0; t < a.length; t++) {
+                var n = a[t].split("=");
+                if (n[0] == e) return n[1]
+            }
+            return !1
+        },
+        api = new Fetch("https://api.ipadraomilitar.com.br/leads/test/query.php", {
+            "Content-type": "application/x-www-form-urlencoded",
+            "Authorization": "Basic RGV2OlNIRTE1MDI5OEF3RHI="
+        }),
+        apiGoogle = new Fetch(
+            "https://script.google.com/macros/s/AKfycbzlTZekdxhVR6mCSmZ4EpqAPZERRB6xiI49HHG3Ipepzo3yN2s_r094/exec", {
+                "Content-type": "application/x-www-form-urlencoded",
+            }),
+
+        r = !!getParams("r") && getParams("r"),
+        form = document.forms.form,
+        f = form.elements.franquia.value,
+        regiao = form.elements.regiao,
+        nome_regiao = form.elements.nome_regiao,
+        bairroList = document.getElementById("listBairro"),
+        bairro = form.elements.bairro,
+        responsavel = form.elements.responsavel,
+        candidato = form.elements.candidato,
+        idade = form.elements.idade,
+        whatsapp = form.elements.whatsapp,
+        grupo = form.elements.grupo,
+        campanha = getParams("utm_campaign") ? form.campanha.value = decodeURI(getParams("utm_campaign")) :
+        form.elements.campanha.value,
+        idCurso = form.elements.curso.value,
+        btnEnviar = form.elements.btnEnviar,
+        franquias, results,
+        Mask = {
+            whats: "99 99999-9999"
+        };
+
+    idades = {
+        IPMIL: [13, 14, 15, 16, 17, 18, 19, 20, 21],
+        MIRIM: [06, 07, 08, 09, 10, 11, 12, 13]
+    }
+    for (var i = 0; i < idades[f].length; i++) {
+        var o = document.createElement("option");
+        o.text = idades[f][i],
+            o.value = idades[f][i],
+            idade.appendChild(o)
+
+    }
+
+    VMasker(whatsapp).maskPattern(Mask.whats);
+
+    api.Consult({
+        r: r,
+        f: f
+    }).then(e => {
+        franquias = e
+        console.log(franquias)
+        for (var i = 0; i < e.length; i++) {
+            var o = document.createElement("option");
+            o.text = e[i].nome,
+                o.value = e[i].id_irc,
+                o.dataset.nome = e[i].nome,
+                o.dataset.wpp = e[i].whatsapp_divulgador,
+                o.dataset.consultor = e[i].divulgador,
+                o.dataset.cidade = e[i].cidade,
+                o.dataset.zona = e[i].grupo_regional,
+                o.dataset.grupo = e[i].grupo,
+                regiao.appendChild(o),
+                1 == e.length && (
+                    regiao.selectedIndex = 1,
+                    document.getElementById("regG").style.display = "none",
+                    Bairro()
+                )
+        }
+    })
+
+    function Bairro() {
+        grupo.value = regiao.selectedOptions[0].dataset.grupo;
+        nome_regiao.value = regiao.selectedOptions[0].dataset.nome;
+        api.Consult({
+            cidade: regiao.selectedOptions[0].getAttribute('data-cidade')
+        }).then(e => {
+            bairroList.innerHTML = ""
+            bairro.value = ""
+            for (var i = 0; i < e.length; i++) {
+                var o = document.createElement("option");
+                o.text = e[i].bairro,
+                    o.value = e[i].bairro,
+                    bairroList.appendChild(o)
+            }
+            bairro.style.display = ""
+        })
+    }
+
+    function InsertDB() {
+        document.querySelector(".process").classList.remove("is-hidden")
+        api.Insert(new FormData(form)).then(e => {
+                apiGoogle.Insert(new FormData(form)).then(e => {
+                        Swal.fire({
+                            title: 'Procurando Instrutor em ' + nome_regiao.value,
+                            icon: 'success',
+                            html: '<h3>Você será direcionado para WhatsApp, aguarde!</h3>',
+                            showCloseButton: false,
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            focusConfirm: false,
+                            onBeforeOpen: () => {
+                                Swal.showLoading()
+                            }
+                        })
+                        console.log(e);
+                    })
+                    .catch(e => console.error("Google Error: " + e))
+                console.log(e);
+                fbq('track', 'Lead');
+                fbq('trackCustom', 'Lead ' + nome_regiao.value);
+                results = e
+                GetWpp(e)
+            })
+            .catch(e => console.error("Error: " + e))
+
+    }
+
+    function Direct() {
+        document.querySelector(".direct").classList.remove("is-hidden"),
+            Swal.fire({
+                title: 'Você já realizou seu cadastro!',
+                icon: 'info',
+                html: '<h3>Você será direcionado para WhatsApp, aguarde!</h3>',
+                showCloseButton: false,
+                showCancelButton: false,
+                showConfirmButton: false,
+                focusConfirm: false,
+                onBeforeOpen: () => {
+                    Swal.showLoading()
+                }
+            })
+        fbq('trackCustom', 'Leads Duplicados')
+        GetWpp()
+    }
+
+    function GetWpp(e = null) {
+        if (e['irc']) {
+            Wpp = e['irc']["divulgador_whatsapp"].replace(/[- ()]/g, '')
+        } else {
+            Wpp = regiao.selectedOptions[0].getAttribute('data-wpp').replace(/[- ()]/g, '')
+        }
+        Loader(40, Wpp)
+    }
+
+
+    function Loader(e, tel = null) {
+        let i = 0,
+            a = document.createElement("a"),
+            m = responsavel ?
+            `*EU QUERO*\nCandidato: ${candidato.value}\nResponsável: ${responsavel.value}\nRegião: ${regiao.selectedOptions[0].dataset.nome}` :
+            `*EU QUERO*\nCandidato: ${candidato.value}\nRegião: ${regiao.selectedOptions[0].dataset.nome}`,
+            t = setInterval(function () {
+                i >= 100 ? (clearInterval(t),
+                    a.href =
+                    `https://wa.me/55${encodeURIComponent(tel)}?text=${encodeURIComponent(m)}`,
+                    a.innerHTML = '<i class="fab fa-whatsapp"></i> Abrir WhatsApp',
+                    document.querySelectorAll(".load")
+                    .forEach(e => {
+                        e.style.display = "none"
+                    }),
+                    document.querySelector(".process").append(a),
+                    document.querySelector(".direct").append(a),
+                    a.click()) : i++
+            }, e)
+    }
+
+    function Send() {
+        Swal.fire({
+            title: 'Processando!',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            onBeforeOpen: () => {
+                Swal.showLoading()
+            }
+        })
+        document.getElementById("regiao_text").innerText = "em " + regiao.selectedOptions[0].dataset.nome
+        form.classList.add("is-hidden")
+        api.Consult({
+            wpp: whatsapp.value,
+            f: f.toLowerCase()
+        }).then(e => {
+            0 === e.length ? InsertDB() : Direct()
+        })
+        window.scrollTo(0, 0);
+    }
+
+    regiao.addEventListener('change', (e) => {
+        Bairro()
+    });
+
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    if (form.checkValidity()) {
+                        console.log("EXEC")
+                        Send()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
